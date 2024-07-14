@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Lorem Ipsum</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="">
+<style>
+        #screen {
+            display: flex;
+            flex-direction: column; /* Stacked vertically by default */
+            height: 100vh;
+            overflow: show;
+        }
+        .page {
+            flex: 1;
+            overflow-y: auto;
+            text-align: center;
+            align-items: center;
+            font-size: 20px;
+            color: black;
+            flex-direction: column;
+            display: flex;
+        }	
+		.box {
+			flex: 1:
+			text-align: flex-start;
+			align-items: flex-start;
+			font-size: 15px;
+            color: black;
+            flex-direction: column;
+            display: flex;
+		}	
+		textarea {
+			resize: none;
+		}
+</style>
+<body>
+<div id="screen" class="screen">
+	<div id="vigenere cypher" class="page">
+		<div id="box" class="box">
+			<p>Input</p>
+			<textarea id="input" rows="15" cols="40"></textarea>
+			<p>Key</p>
+			<textarea id="key" rows="1" cols="40"></textarea>
+			<center>
+				<button onclick="encrypt()">Encrypt</button>
+				<button onclick="decrypt()">Decrypt</button>
+				<button onclick="copyoutput()">Copy Output</button>
+			</center>
+			<p>Output</p>
+			<textarea id="output" rows="7" cols="40"></textarea>
+		</div>
+	</div>
+</div>
+</body>
+<script>
+var debug = false;
+var input ;
+var output ;
+var key = "kryptos";
+var alphabet = "abcdefghijklmnopqrstuvwxyz";
+var x, y, z;
+function copyoutput() {
+    navigator.clipboard.writeText
+    (output);
+}
+function encrypt(){
+	input = document.getElementById("input").value;
+	key = document.getElementById("key").value;
+	output = "";
+	if (key.length < 1) {
+	key = "kryptos";
+	}
+	ogkey = key;
+	while (input.length > key.length) {
+	key = key + ogkey;
+	}
+	input = input.toLocaleLowerCase();
+	for (var i = 0; i < input.length; i++) {
+		if (alphabet.includes(input.substring(i, i+1))) {
+			x = alphabet.indexOf(input.substring(i, i + 1));
+			y = alphabet.indexOf(key.substring(i, i + 1));
+			z = x + y ;
+		if (z > 26) {
+			z = z - 26;
+		}
+		output = output + alphabet.substring(z, z + 1);
+		} else {
+			z = input.substring(i, i + 1);
+			output = output + z;
+		}
+	}
+	console.log("Output: "+output);
+	console.log("Key, Base key: "+key+" , "+ogkey);
+	document.getElementById("output").innerHTML = output;
+}
+function decrypt(){
+	input = document.getElementById("input").value;
+	key = document.getElementById("key").value;
+	output = "";
+	if (key.length < 1) {
+	key = "kryptos";
+	}
+	ogkey = key;
+	while (input.length > key.length) {
+	key = key + ogkey;
+	}
+	input = input.toLocaleLowerCase();
+	for (var i = 0; i < input.length; i++) {
+		if (alphabet.includes(input.substring(i, i+1))) {
+			x = alphabet.indexOf(input.substring(i, i + 1));
+			y = alphabet.indexOf(key.substring(i, i + 1));		
+			if (x < y) {
+			x = x +26;
+			} 
+			z = x - y ;
+		output = output + alphabet.substring(z, z + 1);
+		} else {
+			z = input.substring(i, i + 1);
+			output = output + z;
+		}
+	}
+	console.log("Output: "+output);
+	console.log("Key, Base key: "+key+" , "+ogkey);
+	document.getElementById("output").innerHTML = output;
+}
+</script>
+</html>
